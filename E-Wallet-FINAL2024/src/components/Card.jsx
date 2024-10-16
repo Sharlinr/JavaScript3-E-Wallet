@@ -34,8 +34,8 @@ const Card = ({ card, onActivate, onDelete, onEdit, showBtns = true }) => {
           className={`p-4 rounded-lg shadow-lg mb-4 ${cardClass}`}
           style={{
             width: "100%",
-            maxWidth: "320px", // För en typisk kortbredd
-            aspectRatio: "1 / 1.6", // Förhållande för att få ett kortformat
+            maxWidth: "320px",
+            aspectRatio: "1 / 1.6",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -62,7 +62,7 @@ const Card = ({ card, onActivate, onDelete, onEdit, showBtns = true }) => {
         {showBtns && !isActive && (
           <div className="flex flex-wrap gap-2 justify-start mt-2">
             <button
-              onClick={onEdit}
+              onClick={onEdit ? onEdit : () => {}}
               className="bg-blue-500 text-white py-1 px-2 md:px-4 rounded inline-flex items-center hover:bg-blue-600 transition"
               style={{ minWidth: "40%" }}
             >
@@ -70,7 +70,7 @@ const Card = ({ card, onActivate, onDelete, onEdit, showBtns = true }) => {
             </button>
 
             <button
-              onClick={onActivate}
+              onClick={onActivate ? onActivate : () => {}}
               className="bg-green-500 text-white py-1 px-2 md:px-4 rounded inline-flex items-center hover:bg-green-600 transition"
               style={{ minWidth: "40%" }}
             >
@@ -78,7 +78,7 @@ const Card = ({ card, onActivate, onDelete, onEdit, showBtns = true }) => {
             </button>
 
             <button
-              onClick={onDelete}
+              onClick={onDelete ? onDelete : () => {}}
               className="bg-red-500 text-white py-1 px-2 md:px-4 rounded inline-flex items-center hover:bg-red-600 transition"
               style={{ minWidth: "40%" }}
             >

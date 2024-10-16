@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cards: [],
-  activeCard: null,
+  //activeCard: null,
 };
 
 const cardSlice = createSlice({
@@ -10,15 +10,22 @@ const cardSlice = createSlice({
   initialState,
   reducers: {
     addCard: (state, action) => {
-      if (state.cards.length < 4) {
-        state.cards.push(action.payload);
+      const newCard = {
+        ...action.payload,
+        id: state.cards.length + 1,
+        isActive: false,
+      };
+      if (state.cards.length === 0) {
+        newCard.isActive = true;
       }
+      state.cards.push(newCard);
     },
+
     updateCard: (state, action) => {
       const { id, updatedCard } = action.payload;
       const cardIndex = state.cards.findIndex((card) => card.id === id);
       if (cardIndex >= 0) {
-        state.cards[cardIndex] = updatedCard;
+        state.cards[cardIndex] = { ...state.cards[cardIndex], ...updatedCard };
       }
     },
 
@@ -27,10 +34,13 @@ const cardSlice = createSlice({
     },
 
     activateCard: (state, action) => {
-      state.card.forEach((card) => card.id === action.payload);
+      const cardIndex = state.cards.findIndex(
+        (card) => card.id === action.payload
+      );
+      state.cards.forEach((card) => (card.isActive = false));
       if (cardIndex >= 0) {
         state.cards[cardIndex].isActive = true;
-        state.activeCard = state.cards[cardIndex];
+        //state.activeCard = state.cards[cardIndex];
       }
     },
   },

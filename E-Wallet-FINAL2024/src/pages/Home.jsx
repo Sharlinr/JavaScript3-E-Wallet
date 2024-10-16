@@ -4,11 +4,22 @@ import Card from "../components/Card";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteCard, activateCard } from "../redux/cardSlice";
 
-const Home = ({ cards, onActivate, onDelete }) => {
-  const activeCard = cards.find((card) => card.isActive);
-  const inactiveCards = cards.filter((card) => !card.isActive);
+const Home = () => {
+  const cards = useSelector((state) => state.cards.cards);
+  //const activeCard = useSelector((state) => state.cards.activeCard);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const activeCard = cards.find((card) => card.isActive);
+  const inactiveCards = cards.filter((card) => !card.isActive);
+
+  const handleActivate = (id) => {
+    dispatch(activateCard(id));
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteCard(id));
+  };
   return (
     <main className="p-4">
       <header>
@@ -17,8 +28,8 @@ const Home = ({ cards, onActivate, onDelete }) => {
 
       {activeCard ? (
         <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-4">Active Cards</h2>
-          <Card card={activeCard} onEdit={() => onEdit(activeCard.id)} />
+          <h2 className="text-xl font-semibold mb-4">Active Card</h2>
+          <Card card={activeCard} showBtns={false} />
         </section>
       ) : (
         <p>No active cards</p>
@@ -32,8 +43,8 @@ const Home = ({ cards, onActivate, onDelete }) => {
               <div key={card.id}>
                 <Card
                   card={card}
-                  onActivate={() => onActivate(card.id)}
-                  onDelete={() => onDelete(card.id)}
+                  onActivate={() => handleActivate(card.id)}
+                  onDelete={() => handleDelete(card.id)}
                   onEdit={() => navigate(`/card/${card.id}`)}
                   showBtns={true}
                 />
@@ -53,7 +64,7 @@ const Home = ({ cards, onActivate, onDelete }) => {
             </button>
           </Link>
         ) : (
-          <p className="text-red-500">You have reached limit</p>
+          <p className="text-red-500">You have reached your card limit</p>
         )}
       </nav>
     </main>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import CardPreview from "./CardPreview";
 
 /*
@@ -9,14 +10,18 @@ Utgångsdatum får inte vara ett datum som redan passerat.
 Namnet får inte innehålla siffror.
 Varje kortutgivare ska ge kortet olika utseenden i form av kortets färg + namn eller logotyp för kortutgivaren. */
 
-const CardForm = ({ onSubmit }) => {
+const CardForm = ({
+  onSubmit,
+  initialValues = {},
+  submitText = "Add Card",
+}) => {
   const [cardDetails, setCardDetails] = useState({
-    cardNumber: "",
-    cardholder: "",
-    expireMonth: "",
-    expireYear: "",
-    ccv: "",
-    issuer: "Visa",
+    cardNumber: initialValues.cardNumber || "",
+    cardholder: initialValues.cardholder || "",
+    expireMonth: initialValues.expireMonth || "",
+    expireYear: initialValues.expireYear || "",
+    ccv: initialValues.ccv || "",
+    issuer: initialValues.issuer || "Visa",
   });
 
   const { cardNumber, cardholder, expireMonth, expireYear, ccv, issuer } =
@@ -50,6 +55,8 @@ const CardForm = ({ onSubmit }) => {
     }
   };
 
+  const backHome = () => {};
+
   return (
     <>
       <CardPreview
@@ -73,6 +80,7 @@ const CardForm = ({ onSubmit }) => {
             onChange={handleChange}
             placeholder="1234 5678 9012 3456"
             maxLength="16"
+            minLength="16"
             pattern="\d{16}"
             title="Cardnumber must be 16 digits"
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -91,6 +99,8 @@ const CardForm = ({ onSubmit }) => {
             onChange={handleChange}
             placeholder="Firstname Lastname"
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            pattern="^[a-zA-Z]+ [a-zA-Z]+$" // Förnamn och efternamn
+            title="Name must include first and last name"
             required
           />
         </div>
@@ -149,6 +159,8 @@ const CardForm = ({ onSubmit }) => {
             onChange={handleChange}
             placeholder="123"
             maxLength="3"
+            minLength="3"
+            pattern="\d{3}"
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -172,22 +184,14 @@ const CardForm = ({ onSubmit }) => {
 
         <button
           type="submit"
-          className={`
-            w-full
-            py-2
-            px-4
-            rounded-lg
-            transition
-            duration-300
-            ${
-              isValidDate() &&
-              cardNumber.length === 16 &&
-              ccv.length === 3 &&
-              /^[a-zA-Z]+ [a-zA-Z]+$/.test(cardholder)
-                ? "bg-blue-500 text-white hover:bg-blue-600"
-                : "bg-blue-200 text-blue-400 cursor-not-allowed"
-            }
-          `}
+          className={`w-full py-2 px-4 rounded-lg transition duration-300 ${
+            isValidDate() &&
+            cardNumber.length === 16 &&
+            ccv.length === 3 &&
+            /^[a-zA-Z]+ [a-zA-Z]+$/.test(cardholder)
+              ? "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-blue-200 text-blue-400 cursor-not-allowed"
+          }`}
           disabled={
             !isValidDate() ||
             cardNumber.length !== 16 ||
@@ -195,9 +199,16 @@ const CardForm = ({ onSubmit }) => {
             !/^[a-zA-Z]+ [a-zA-Z]+$/.test(cardholder)
           }
         >
-          Add card
+          {submitText}
         </button>
       </form>
+      <nav className="mt-6 text-center">
+        <Link to="/">
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+            Back to homepage
+          </button>
+        </Link>
+      </nav>
     </>
   );
 };

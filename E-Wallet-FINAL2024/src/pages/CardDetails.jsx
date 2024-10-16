@@ -1,56 +1,166 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Card from "../components/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCard, deleteCard, activateCard } from "../redux/cardSlice";
+
 import CardForm from "../components/CardForm";
 import CardPreview from "../components/CardPreview";
 
-const CardDetails = ({ cards, onUpdateCard, onDeleteCard }) => {
+const CardDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const card = cards.find((card) => card.id === parseInt(id));
+
+  const card = useSelector((state) =>
+    state.cards.cards.find((c) => c.id === parseInt(id))
+  );
+
+  if (!card) {
+    return <p>Card not found</p>;
+  }
 
   const [editMode, setEditMode] = useState(false);
   const [updatedCard, setUpdatedCard] = useState({ ...card });
 
-  const {
-    issuer,
-    cardNumber,
-    cardholder,
-    expireMonth,
-    expireYear,
-    ccv,
-    isActive,
-  } = card || {};
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedCard({
-      ...updatedCard,
-      [name]: value,
-    });
-  };
-
-  const handleSave = () => {
-    onUpdateCard(card.id, updatedCard);
-    setEditMode(false);
+  const handleSave = (newCardDetails) => {
+    dispatch(updateCard({ id: card.id, updatedCard: newCardDetails }));
     navigate("/");
   };
 
-  const handleActive = () => {
-    onUpdateCard(card.id, { ...card, isActive: true });
+  const handleActivate = () => {
+    dispatch(activateCard(card.id));
     navigate("/");
   };
 
   const handleDelete = () => {
-    onDeleteCard(card.id);
+    dispatch(deleteCard(card.id));
     navigate("/");
   };
 
-  if (!card) {
-    <p>Card not found</p>;
-  }
-
   return (
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Edit Card</h1>
+
+      <CardForm
+        onSubmit={handleSave} // Skickar uppdaterade data tillbaka
+        initialValues={card} // Skickar nuvarande kortvärden som initialvärden
+        submitText="Save"
+      />
+
+      {/* Visa aktivera- och raderaknappen om kortet är inaktivt */}
+      {!card.isActive && (
+        <div className="mt-4">
+          <button
+            onClick={handleActivate}
+            className="bg-green-500 text-white py-2 px-4 rounded-lg"
+          >
+            Activate Card
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white py-2 px-4 rounded-lg ml-4"
+          >
+            Delete Card
+          </button>
+        </div>
+      )}
+    </div>
+  );
+
+  {
+    /* 
+
+
+      <form className="space-y-4">
+        <label>Card Issuer</label>
+        <input
+          type="text"
+          name="issuer"
+          value={updatedCard.issuer}
+          onChange={handleChange}
+          required
+        />
+
+        <label>Card Number</label>
+        <input
+          type="text"
+          name="cardNumber"
+          value={updatedCard.cardNumber}
+          onChange={handleChange}
+          maxLength="16"
+          required
+        />
+
+        <label>Cardholder</label>
+        <input
+          type="text"
+          name="cardholder"
+          value={updatedCard.cardholder}
+          onChange={handleChange}
+          pattern="^[a-zA-Z]+ [a-zA-Z]+$"
+          required
+        />
+
+        <label>Expire Month</label>
+        <input
+          type="text"
+          name="expireMonth"
+          value={updatedCard.expireMonth}
+          onChange={handleChange}
+          required
+        />
+
+        <label>Expire Year</label>
+        <input
+          type="text"
+          name="expireYear"
+          value={updatedCard.expireYear}
+          onChange={handleChange}
+          required
+        />
+
+        <label>CCV</label>
+        <input
+          type="text"
+          name="ccv"
+          value={updatedCard.ccv}
+          onChange={handleChange}
+          required
+        />
+
+        <button
+          onClick={handleSave}
+          className="bg-blue-500 text-white py-2 px-4 rounded-lg"
+        >
+          Save Changes
+        </button>
+      </form>
+
+      {!card.isActive && (
+        <div className="mt-4">
+          <button
+            onClick={handleActivate}
+            className="bg-green-500 text-white py-2 px-4 rounded-lg"
+          >
+            Activate Card
+          </button>
+          <button
+            onClick={handleDelete}
+            className="bg-red-500 text-white py-2 px-4 rounded-lg ml-4"
+          >
+            Delete Card
+          </button>
+        </div>
+      )}
+    </div>
+  );
+  */
+  }
+};
+
+export default CardDetails;
+
+/* return (
     <div className="max-w-md mx-auto p-4">
       <h1>Kortdetaljer</h1>
 
@@ -139,7 +249,7 @@ const CardDetails = ({ cards, onUpdateCard, onDeleteCard }) => {
     </div>
   );
 
-  /*<main>
+  <main>
       <header>
         <h1>Card Details</h1>
       </header>
@@ -160,7 +270,7 @@ const CardDetails = ({ cards, onUpdateCard, onDeleteCard }) => {
           <button>Back to homepage</button>
         </Link>
       </nav>
-    </main>*/
+    </main>
 };
 
-export default CardDetails;
+export default CardDetails;*/
