@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cards: [],
-  //activeCard: null,
 };
 
 const cardSlice = createSlice({
@@ -13,11 +12,12 @@ const cardSlice = createSlice({
       const newCard = {
         ...action.payload,
         id: state.cards.length + 1,
-        isActive: false,
+        // isActive: false,
+        isActive: state.cards.length === 0 ? true : false, //Ny kod
       };
-      if (state.cards.length === 0) {
+      /*if (state.cards.length === 0) {
         newCard.isActive = true;
-      }
+      }*/
       state.cards.push(newCard);
     },
 

@@ -8,6 +8,7 @@ const CardForm = ({
   onSubmit,
   initialValues = {},
   submitText = "Add Card",
+  isActive = false,
 }) => {
   const [cardDetails, setCardDetails] = useState({
     cardNumber: initialValues.cardNumber || "",
@@ -26,8 +27,9 @@ const CardForm = ({
   });
 
   useEffect(() => {
-    setErrors(getFormErrors(cardDetails));
-  }, [cardDetails]);
+    const formErrors = getFormErrors(cardDetails, isActive);
+    setErrors(getFormErrors(cardDetails, isActive));
+  }, [cardDetails, isActive]);
 
   const { cardNumber, cardholder, expireMonth, expireYear, ccv, issuer } =
     cardDetails;
@@ -41,7 +43,8 @@ const CardForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formErrors = getFormErrors(cardDetails);
+    const formErrors = getFormErrors(cardDetails, isActive);
+
     if (Object.values(formErrors).every((error) => error === "")) {
       onSubmit(cardDetails);
     } else {
@@ -51,6 +54,7 @@ const CardForm = ({
 
   return (
     <>
+      {console.log("Rendering form with errors:", errors)}
       <CardPreview
         issuer={issuer}
         cardNumber={cardNumber}
@@ -135,7 +139,7 @@ const CardForm = ({
               value={expireYear}
               onChange={handleChange}
               placeholder="YYYY"
-              min={new Date().getFullYear()}
+              min={isActive ? new Date().getFullYear() : undefined}
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
