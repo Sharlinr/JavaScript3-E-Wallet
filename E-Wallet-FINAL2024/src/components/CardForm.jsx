@@ -19,12 +19,7 @@ const CardForm = ({
     issuer: initialValues.issuer || "Visa",
   });
 
-  const [errors, setErrors] = useState({
-    cardNumber: "",
-    cardholder: "",
-    expireDate: "",
-    ccv: "",
-  });
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     //const formErrors = getFormErrors(cardDetails, isActive);

@@ -55,9 +55,7 @@ export const getFormErrors = (
   return {
     cardNumber: isValidCardNumber(cardNumber),
     cardholder: isValidCardholder(cardholder),
-    expireDate: isEditMode
-      ? isValidDateForEditMode(expireMonth, expireYear)
-      : isValidDate(expireMonth, expireYear),
+    expireDate: isEditMode ? "" : isValidDate(expireMonth, expireYear),
     ccv: isValidCCV(ccv),
   };
 };

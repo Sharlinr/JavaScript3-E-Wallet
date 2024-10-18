@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getFormErrors } from "../utils/validationHelpers";
 
 const initialState = {
   cards: [],
+  isEditMode: false,
 };
 
 const cardSlice = createSlice({
@@ -47,6 +49,9 @@ const cardSlice = createSlice({
     deleteInactiveCards: (state) => {
       state.cards = state.cards.filter((card) => card.isActive);
     },
+    setEditMode: (state, action) => {
+      state.isEditMode = action.payload;
+    },
   },
 });
 
@@ -56,6 +61,7 @@ export const {
   deleteCard,
   activateCard,
   deleteInactiveCards,
+  setEditMode,
 } = cardSlice.actions;
 
 export default cardSlice.reducer;

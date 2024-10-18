@@ -40,3 +40,23 @@
 .read-the-docs {
   color: #888;
 }
+
+:root {
+  --bg-color: white;
+  --text-color: black;
+}
+
+[data-theme="dark"] {
+  --bg-color: #333;
+  --text-color: white;
+}
+
+[data-theme="green"] {
+  --bg-color: #e3fcec;
+  --text-color: #2c6b2f;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}

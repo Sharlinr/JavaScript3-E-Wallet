@@ -21,6 +21,10 @@ const Home = () => {
     dispatch(deleteCard(id));
   };
 
+  const handleEdit = (id) => {
+    navigate(`/card/${id}`);
+  };
+
   const handleNavigateToSettings = () => {
     navigate("/settings");
   };
@@ -50,7 +54,7 @@ const Home = () => {
                   card={card}
                   onActivate={() => handleActivate(card.id)}
                   onDelete={() => handleDelete(card.id)}
-                  onEdit={() => navigate(`/card/${card.id}`)}
+                  onEdit={() => handleEdit(card.id)}
                   showBtns={true}
                 />
               </div>

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./App.css";
 import CardDetails from "./pages/CardDetails";
 import AddCard from "./pages/AddCard";
@@ -8,34 +9,11 @@ import Home from "./pages/Home";
 import CardSettings from "./pages/CardSettings";
 
 function App() {
-  const [cards, setCards] = useState([]);
+  const theme = useSelector((state) => state.theme.theme);
 
-  const handleAddCard = (newCard) => {
-    if (cards.length < 4) {
-      setCards([
-        ...cards,
-        { ...newCard, id: cards.length + 1, isActive: false },
-      ]);
-    }
-  };
-
-  const handleUpdateCard = (id, updatedCard) => {
-    setCards(
-      cards.map((card) =>
-        card.id === parseInt(id) ? { ...card, ...updatedCard } : card
-      )
-    );
-  };
-
-  const handleActivateCard = (id) => {
-    setCards(
-      cards.map((card) =>
-        card.id === id
-          ? { ...card, isActive: true }
-          : { ...card, isActive: false }
-      )
-    );
-  };
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
 
   return (
     <>

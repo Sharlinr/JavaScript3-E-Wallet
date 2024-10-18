@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCard, deleteCard, activateCard } from "../redux/cardSlice";
+import {
+  updateCard,
+  deleteCard,
+  activateCard,
+  setEditMode,
+} from "../redux/cardSlice";
 import CardForm from "../components/CardForm";
-import { getFormErrors } from "../utils/validationHelpers";
 
 const CardDetails = () => {
   const { id } = useParams();
@@ -18,28 +22,16 @@ const CardDetails = () => {
     return <p>Card not found</p>;
   }
 
+  useEffect(() => {
+    dispatch(setEditMode(true));
+    return () => {
+      dispatch(setEditMode(false));
+    };
+  }, [dispatch]);
+
   const handleSave = (newCardDetails) => {
-    //const formErrors = getFormErrors(newCardDetails, true);
-
-    //const hasErrors = Object.values(formErrors).some((error) => error !== "");
-
-    if (!card.isActive) {
-      const formErrors = getFormErrors(newCardDetails, card.isActive); // Passa in card.isActive
-      const hasErrors = Object.values(formErrors).some((error) => error !== "");
-      //dispatch(updateCard({ id: card.id, updatedCard: newCardDetails }));
-      //navigate("/");
-
-      if (!hasErrors) {
-        dispatch(updateCard({ id: card.id, updatedCard: newCardDetails }));
-        navigate("/");
-      } else {
-        console.log("Validation errors (carddetails.jsx)", formErrors);
-      }
-    } else {
-      //const formErrors = getFormErrors(newCardDetails, card.isActive);  // Passa in card.isActive
-      //const hasErrors = Object.values(formErrors).some((error) => error !== "");
-      console.log("Kortet är aktivt och kan inte redigeras.");
-    }
+    dispatch(updateCard({ id: card.id, updatedCard: newCardDetails }));
+    navigate("/");
   };
 
   const handleActivate = () => {
@@ -61,6 +53,7 @@ const CardDetails = () => {
         initialValues={card}
         submitText="Save Changes"
         isActive={card.isActive}
+        isEditMode
       />
 
       {!card.isActive && (
