@@ -12,7 +12,7 @@ export const isValidCardholder = (cardholder) => {
   return "";
 };
 
-export const isValidDate = (expireMonth, expireYear, isActive) => {
+export const isValidDate = (expireMonth, expireYear) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
   const year = parseInt(expireYear, 10);
@@ -24,10 +24,6 @@ export const isValidDate = (expireMonth, expireYear, isActive) => {
 
   const expirationDate = new Date(year, month - 1);
   const today = new Date(currentYear, currentMonth - 1);
-
-  if (!isActive) {
-    return "";
-  }
 
   if (expirationDate < today) {
     return "Expiration date must be in the future";
@@ -54,13 +50,12 @@ export const isValidCCV = (ccv) => {
 
 export const getFormErrors = (
   { cardNumber, cardholder, expireMonth, expireYear, ccv },
-  isActive = false
+  isEditMode = false
 ) => {
-  console.log("Running validation with isActive:", isActive);
   return {
     cardNumber: isValidCardNumber(cardNumber),
     cardholder: isValidCardholder(cardholder),
-    expireDate: isActive
+    expireDate: isEditMode
       ? isValidDateForEditMode(expireMonth, expireYear)
       : isValidDate(expireMonth, expireYear),
     ccv: isValidCCV(ccv),

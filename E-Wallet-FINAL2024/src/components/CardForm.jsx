@@ -8,7 +8,7 @@ const CardForm = ({
   onSubmit,
   initialValues = {},
   submitText = "Add Card",
-  isActive = false,
+  isEditMode = false,
 }) => {
   const [cardDetails, setCardDetails] = useState({
     cardNumber: initialValues.cardNumber || "",
@@ -27,9 +27,9 @@ const CardForm = ({
   });
 
   useEffect(() => {
-    const formErrors = getFormErrors(cardDetails, isActive);
-    setErrors(getFormErrors(cardDetails, isActive));
-  }, [cardDetails, isActive]);
+    //const formErrors = getFormErrors(cardDetails, isActive);
+    setErrors(getFormErrors(cardDetails, isEditMode));
+  }, [cardDetails, isEditMode]);
 
   const { cardNumber, cardholder, expireMonth, expireYear, ccv, issuer } =
     cardDetails;
@@ -43,7 +43,10 @@ const CardForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formErrors = getFormErrors(cardDetails, isActive);
+    console.log("Submit triggered!");
+
+    const formErrors = getFormErrors(cardDetails, isEditMode);
+    console.log("Form Errors before submit:", formErrors);
 
     if (Object.values(formErrors).every((error) => error === "")) {
       onSubmit(cardDetails);
@@ -139,7 +142,7 @@ const CardForm = ({
               value={expireYear}
               onChange={handleChange}
               placeholder="YYYY"
-              min={isActive ? new Date().getFullYear() : undefined}
+              min={isEditMode ? 1900 : new Date().getFullYear()}
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />

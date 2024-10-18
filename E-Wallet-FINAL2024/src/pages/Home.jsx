@@ -20,6 +20,11 @@ const Home = () => {
   const handleDelete = (id) => {
     dispatch(deleteCard(id));
   };
+
+  const handleNavigateToSettings = () => {
+    navigate("/settings");
+  };
+
   return (
     <main className="p-4">
       <header>
@@ -66,6 +71,13 @@ const Home = () => {
         ) : (
           <p className="text-red-500">You have reached your card limit</p>
         )}
+
+        <button
+          onClick={handleNavigateToSettings}
+          className="ml-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300"
+        >
+          Settings
+        </button>
       </nav>
     </main>
   );

@@ -3,8 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import CardDetails from "./pages/CardDetails";
 import AddCard from "./pages/AddCard";
-import CardSettings from "./pages/CardSettings";
+import Settings from "./pages/Settings";
 import Home from "./pages/Home";
+import CardSettings from "./pages/CardSettings";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -40,21 +41,12 @@ function App() {
     <>
       <h1>E-WALLET</h1>
       <Routes>
-        <Route
-          path="/"
-          element={<Home cards={cards} onActivate={handleActivateCard} />}
-        />
-        <Route
-          path="/addcard"
-          element={<AddCard onAddCard={handleAddCard} />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/addcard" element={<AddCard />} />
         <Route path="/cardsettings" element={<CardSettings />} />
-        <Route
-          path="/card/:id"
-          element={
-            <CardDetails cards={cards} onUpdateCard={handleUpdateCard} />
-          }
-        />
+        <Route path="/card/:id" element={<CardDetails />} />
+
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </>
   );

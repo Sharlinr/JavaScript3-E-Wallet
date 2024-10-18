@@ -20,7 +20,7 @@ const AddCard = () => {
 
   const handleSubmit = (cardDetails) => {
     const id = Math.random();
-    dispatch(addCard({ ...cardDetails, id, isActive: false }));
+    dispatch(addCard({ ...cardDetails, id, isEditMode: false }));
     navigate("/");
   };
 

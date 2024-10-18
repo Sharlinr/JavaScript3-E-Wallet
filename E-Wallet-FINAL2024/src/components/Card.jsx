@@ -1,12 +1,5 @@
 import React from "react";
 
-/*
-Visa all kortinformation för valt kort.
-Användare ska kunna redigera kortinformationen om det är inaktivt.
-Användare ska kunna aktivera kortet om det är inaktivt.
-Användare ska kunna radera kortet om det är inaktivt.
-Det ska inte vara möjligt att göra ändringar/radera kortet om det är aktivt.*/
-
 const Card = ({ card, onActivate, onDelete, onEdit, showBtns = true }) => {
   const {
     issuer,

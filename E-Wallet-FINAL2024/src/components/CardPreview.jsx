@@ -9,7 +9,6 @@ const CardPreview = ({
   expireYear = "YYYY",
   ccv = "***",
 }) => {
-  // Vi skickar dessa props vidare till Card-komponenten för att undvika kodduplicering.
   return (
     <div className="mb-6">
       <Card
@@ -20,9 +19,9 @@ const CardPreview = ({
           expireMonth,
           expireYear,
           ccv,
-          isActive: false, // Förhandsvisningen ska aldrig visa ett aktivt kort
+          isActive: false,
         }}
-        showBtns={false} // Vi vill inte visa några knappar i förhandsvisningen
+        showBtns={false}
       />
     </div>
   );
