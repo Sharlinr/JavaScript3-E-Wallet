@@ -71,7 +71,7 @@ const CardDetails = () => {
           </button>
           <button
             onClick={handleDelete}
-            className="bg-red-500 text-white py-2 px-4 rounded-lg ml-4"
+            className="bg-red-500 text-white py-2 px-4 rounded-lg"
           >
             Delete Card
           </button>
