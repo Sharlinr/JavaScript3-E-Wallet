@@ -14,12 +14,10 @@ const cardSlice = createSlice({
       const newCard = {
         ...action.payload,
         id: state.cards.length + 1,
-        // isActive: false,
+
         isActive: state.cards.length === 0 ? true : false, //Ny kod
       };
-      /*if (state.cards.length === 0) {
-        newCard.isActive = true;
-      }*/
+
       state.cards.push(newCard);
     },
 
@@ -42,7 +40,6 @@ const cardSlice = createSlice({
       state.cards.forEach((card) => (card.isActive = false));
       if (cardIndex >= 0) {
         state.cards[cardIndex].isActive = true;
-        //state.activeCard = state.cards[cardIndex];
       }
     },
 

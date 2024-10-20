@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateCard,
@@ -15,11 +15,16 @@ const CardDetails = () => {
   const navigate = useNavigate();
 
   const card = useSelector((state) =>
-    state.cards.cards.find((c) => c.id === parseInt(id))
+    state.cards.cards.find((c) => c.id === parseInt(id, 10))
   );
 
   if (!card) {
-    return <p>Card not found</p>;
+    return (
+      <div>
+        <p>Card not found</p>
+        <Link to="/">Back to homepage</Link>
+      </div>
+    );
   }
 
   useEffect(() => {
@@ -53,7 +58,7 @@ const CardDetails = () => {
         initialValues={card}
         submitText="Save Changes"
         isActive={card.isActive}
-        isEditMode
+        isEditMode={true}
       />
 
       {!card.isActive && (

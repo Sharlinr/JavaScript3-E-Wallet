@@ -6,7 +6,6 @@ import CardDetails from "./pages/CardDetails";
 import AddCard from "./pages/AddCard";
 import Settings from "./pages/Settings";
 import Home from "./pages/Home";
-import CardSettings from "./pages/CardSettings";
 
 function App() {
   const theme = useSelector((state) => state.theme.theme);
@@ -21,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/addcard" element={<AddCard />} />
-        <Route path="/cardsettings" element={<CardSettings />} />
+
         <Route path="/card/:id" element={<CardDetails />} />
 
         <Route path="/settings" element={<Settings />} />

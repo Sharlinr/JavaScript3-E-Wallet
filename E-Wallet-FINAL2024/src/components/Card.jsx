@@ -27,8 +27,8 @@ const Card = ({ card, onActivate, onDelete, onEdit, showBtns = true }) => {
           className={`p-4 rounded-lg shadow-lg mb-4 ${cardClass}`}
           style={{
             width: "100%",
-            maxWidth: "320px",
-            aspectRatio: "1 / 1.6",
+            maxWidth: "400",
+            aspectRatio: "2.5 / 1",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",

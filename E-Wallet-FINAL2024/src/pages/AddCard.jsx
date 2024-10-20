@@ -1,20 +1,10 @@
 import React from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addCard } from "../redux/cardSlice";
 import CardForm from "../components/CardForm";
 
 const AddCard = () => {
-  const [newCard, setNewCard] = useState({
-    issuer: "Visa",
-    cardNumber: "",
-    cardholder: "",
-    expireMonth: "",
-    expireYear: "",
-    ccv: "",
-  });
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,7 +20,14 @@ const AddCard = () => {
 
       <CardForm
         onSubmit={handleSubmit}
-        initialValues={newCard}
+        initialValues={{
+          issuer: "Visa",
+          cardNumber: "",
+          cardholder: "",
+          expireMonth: "",
+          expireYear: "",
+          ccv: "",
+        }}
         submitText="Add Card"
       />
     </div>

@@ -22,7 +22,6 @@ const CardForm = ({
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    //const formErrors = getFormErrors(cardDetails, isActive);
     setErrors(getFormErrors(cardDetails, isEditMode));
   }, [cardDetails, isEditMode]);
 
@@ -38,10 +37,8 @@ const CardForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submit triggered!");
 
     const formErrors = getFormErrors(cardDetails, isEditMode);
-    console.log("Form Errors before submit:", formErrors);
 
     if (Object.values(formErrors).every((error) => error === "")) {
       onSubmit(cardDetails);
@@ -52,7 +49,6 @@ const CardForm = ({
 
   return (
     <>
-      {console.log("Rendering form with errors:", errors)}
       <CardPreview
         issuer={issuer}
         cardNumber={cardNumber}
@@ -62,7 +58,7 @@ const CardForm = ({
         ccv={ccv}
       />
 
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-6">
+      <form onSubmit={handleSubmit} className="card-form">
         <div>
           <label className="block text-sm font-semibold mb-1">
             Card Number:
@@ -176,7 +172,7 @@ const CardForm = ({
             <option value="American Express">American Express</option>
           </select>
         </div>
-        ------
+
         <button
           type="submit"
           className="w-full py-3 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition duration-300"

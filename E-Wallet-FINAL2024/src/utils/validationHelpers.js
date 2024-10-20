@@ -6,8 +6,8 @@ export const isValidCardNumber = (cardNumber) => {
 };
 
 export const isValidCardholder = (cardholder) => {
-  if (!/^[a-zA-Z]+ [a-zA-Z]+$/.test(cardholder)) {
-    return "Cardholder must be first- and lastname. No numbers or special signs";
+  if (!/^[A-Za-z\-\s]+ [A-Za-z]+$/.test(cardholder)) {
+    return "Cardholders firstname and lastname. No digits";
   }
   return "";
 };
